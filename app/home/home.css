@@ -1,0 +1,9 @@
+.centered{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+md-card .game-card{
+    height: 200px;
+}

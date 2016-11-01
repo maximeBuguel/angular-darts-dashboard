@@ -1,0 +1,39 @@
+<div ng-show="!hc.gameSelected">
+    <div layout="row" layout-align="center">
+      <md-card flex="20" class="game-card" ng-repeat="game in hc.scoresGames" ng-click="hc.selectGame(game)">
+        <md-card-title>
+              <md-card-title-text>
+                    <center>
+                      <span class="md-headline centered">{{game}}</span>
+                    </center>
+            </md-card-title-text>
+          </md-card-title>
+       </md-card>
+    </div>
+    <div layout="row" layout-align="center">
+      <md-card flex="20" class="game-card" ng-repeat="game in hc.cricketsGames" ng-click="hc.selectGame(game)">
+            <md-card-title>
+                
+                  <md-card-title-text>
+                    <center>
+                      <span class="md-headline centered">{{game}}</span>
+                    </center>
+                </md-card-title-text>
+                
+            </md-card-title>
+       </md-card>
+    </div>
+</div>
+<div ng-show="hc.gameSelected">
+    <div layout="row" layout-align="center">
+      <md-card flex="20" class="game-card" ng-repeat="players in hc.nbPlayers" ng-click="hc.selectPlayers(players)">
+        <md-card-title>
+              <md-card-title-text>
+                    <center>
+                      <span class="md-headline centered">{{players}}</span>
+                    </center>
+            </md-card-title-text>
+          </md-card-title>
+       </md-card>
+    </div>
+</div>
