@@ -10,19 +10,19 @@ angular.module('myApp.game', ['ngRoute'])
   });
 }])
 
-.controller('GameCtrl', [function() {
+.controller('GameCtrl', ['constellationConsumer', function(constellation) {
     console.log("GameCtrl");
     var vm = this;
     vm.game = {
 	"game_id":1,
-	"game_type":"Cut throat cricket",
+	"game_type":"01 Game",
 	"round_number": 2,
 	"player" : 1, 
 	"players":[
 		{
 			"player_id":1,
 			"player_name":"maxime",
-			"score":0,
+			"score":79,
 			"rounds":[
 				[
 					"10",
@@ -37,7 +37,7 @@ angular.module('myApp.game', ['ngRoute'])
 		{
 			"player_id":2,
 			"player_name":"thomas",
-			"score":0,
+			"score":33,
 			"rounds":[
 				[
 					"15",
@@ -50,7 +50,7 @@ angular.module('myApp.game', ['ngRoute'])
 		{
 			"player_id":3,
 			"player_name":"quentin",
-			"score":0,
+			"score":43,
 			"rounds":[
 				[
 					"10",
@@ -62,7 +62,7 @@ angular.module('myApp.game', ['ngRoute'])
 		{
 			"player_id":4,
 			"player_name":"charles",
-			"score":0,
+			"score":78,
 			"rounds":[
 				[
 					"16",
@@ -120,8 +120,27 @@ angular.module('myApp.game', ['ngRoute'])
     
     
     vm.setCurrentPlayerTurn = setCurrentPlayerTurn;
-    
+    vm.cancelDart = cancelDart;
+    vm.nextPlayer =nextPlayer;
     setCurrentPlayerTurn();
+    
+    init();
+    
+    function init(){
+        constellation.initializeClient("http://192.168.1.2:8088", "maximeQuentinThomasCharles5900DartsBoyGay", "DartsDashboard");
+        constellation.onConnectionStateChanged(function (change) {
+            if (change.newState === $.signalR.connectionState.connected) {
+                console.log("DartsDashboard connected");
+            }
+        });
+        constellation.connect();
+    }
+    
+    //S'abonner au stateobject game
+    /*constellation.registerStateObjectLink("*", "HWMonitor", "/intelcpu/0/load/0", "*", function (so) {
+        vm.game = vo.parseJSON();    
+    });
+    */
     
     function setCurrentPlayerTurn(){
         var currentPlayerIndex = vm.game.player - 1;
@@ -134,6 +153,14 @@ angular.module('myApp.game', ['ngRoute'])
         }else{
              vm.currentPlayerTurn = [undefined ,undefined ,undefined];
         }
+    }
+    
+    function cancelDart(){
+        //message callback cancel dart
+    }
+    
+    function nextPlayer(){
+        //message callback next player
     }
     
     function isCurrentPlayer(playerId){

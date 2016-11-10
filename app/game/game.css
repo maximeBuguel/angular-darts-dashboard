@@ -2,3 +2,7 @@
     background-color: #5E97F6;
     color: #FFFFFF;
 }
+
+.md-card-title{
+    padding: 5px !important;
+}

@@ -1,5 +1,5 @@
 <div layout="row" layout-align="center">
-      <md-card flex="20" class="game-card" ng-repeat="player in gc.game.players" ng-click="hc.selectGame(game)" ng-class="{'current-player': gc.game.player == player.player_id}">
+      <md-card flex="20" class="game-card" ng-repeat="player in gc.game.players" ng-class="{'current-player': gc.game.player == player.player_id}">
         <md-card-title>
               <md-card-title-text>
                     <center>
@@ -14,16 +14,38 @@
 <div layout="row" layout-align="center">
     <md-card flex="60" class="game-card">
         <md-card-title>
-            <md-card-title-text>
-                      <span class="md-headline centered" layout="row" layout-align="center center">
+            <md-card-title-text layout="column" layout-align="center">
+                      <span class="md-headline centered" layout="row" layout-align="center">
                           <div flex="33" class="turn" ng-repeat="dart in gc.currentPlayerTurn track by $index">
                               <center>
-                                  <img ng-show="!dart" src="images/darts.png"/>
-                                  <h1 ng-show="dart">{{dart | uppercase}}</h1>
+                                  <img ng-show="!dart" height="75" width="75" src="images/darts.png"/>
+                                  <h2 ng-show="dart">{{dart | uppercase}}</h1>
                               </center>
                           </div>
                       </span>
+                      <div layout="row" layout-align="center">
+                        <md-button class="md-raised md-primary" ng-click="gc.nextPlayer()">Next Player</md-button>
+                        <md-button class="md-raised md-warn" ng-click="gc.cancelDart()">Cancel Dart</md-button>
+                      </div>
             </md-card-title-text>
           </md-card-title>
     </md-card>
 </div>
+<md-card layout="column" layout-align="center">
+        <md-card-title flex="10">
+              <md-card-title-text>
+                <h2 class="md-headline centered">Summary :</h2>
+            </md-card-title-text>
+          </md-card-title>
+       <div layout="row" layout-align="center"  flex="90" >
+           <div flex="25" ng-repeat="player in gc.game.players">
+               <h3>{{player.player_name | uppercase}}</h3>
+               <md-divider></md-divider>
+               <div ng-repeat="round in player.rounds" layout="row" layout-align="center">
+                   <span ng-repeat="dart in round track by $index" style="padding:5px;">
+                       <span ng-show="dart">{{dart| uppercase}}</span>
+                   </span>
+               </div>
+           </div>
+       </div>
+</md-card>
