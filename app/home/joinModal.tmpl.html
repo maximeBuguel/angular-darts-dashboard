@@ -1,0 +1,28 @@
+<md-dialog>
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Join the game</h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Use the app to join the game</h2>
+        <center>
+              <p>
+                <qrcode type-number="8" correction-level="'H'" size="200" data="{{jmc.gameId}}"></qrcode>
+              </p>
+        </center>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="jmc.answer('useful')">
+        Close
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

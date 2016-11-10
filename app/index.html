@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
   <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="game/game.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -21,9 +22,11 @@
 
   <md-toolbar>
       <div class="md-toolbar-tools">
-        <md-button style="padding-top:5px">
-          <i class="material-icons">home</i>
-        </md-button>
+          <a href="#">
+            <md-button style="padding-top:8px">
+                <i class="material-icons">home</i>
+            </md-button>
+          </a>
         <h2>
           <span>Darts</span>
         </h2>
@@ -43,12 +46,14 @@
   <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-aria/angular-aria.js"></script>
   <script src="bower_components/angular-material/angular-material.js"></script>
+  <script src="bower_components/angular-qrcode/angular-qrcode.js"></script>
   <script src="app.js"></script>
   <script src="home/home.js"></script>
   <script src="game/game.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+  <script type="text/javascript" src="non_bower_components/qrcode.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
   <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.1.min.js"></script>
   <script type="text/javascript" src="//cdn.myconstellation.io/js/Constellation-1.8.1.min.js"></script>

@@ -8,7 +8,8 @@ angular.module('myApp', [
   'myApp.version',
   'ngAria',
   'ngMaterial',
-  'ngConstellation'
+  'ngConstellation',
+  'monospaced.qrcode'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $routeProvider.otherwise({redirectTo: '/home'});

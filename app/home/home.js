@@ -10,7 +10,7 @@ angular.module('myApp.home', ['ngRoute'])
   });
 }])
 
-.controller('HomeCtrl', ['constellationConsumer', function(constellation) {
+.controller('HomeCtrl', ['constellationConsumer','$location','$mdDialog', function(constellation,  $location, $mdDialog) {
     
     var vm = this;
     
@@ -19,16 +19,20 @@ angular.module('myApp.home', ['ngRoute'])
     vm.nbPlayers = [1,2,3,4];
     vm.currentGame = {};
     vm.gameSelected = false;
+    vm.playersSelected = false;
     
-    
+	var stringArray = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','!','?'];
+
+    vm.generateToken = generateToken;
     vm.init = init;
     vm.selectGame = selectGame;
     vm.selectPlayers = selectPlayers;
-    
+    vm.startGame = startGame;
+    vm.joinModal  = joinModal;
     init();
-    
+        
     function init(){
-        constellation.initializeClient("http://localhost:8088", "352783eac7e2adb5b50692d522ffc81a3a6cae18", "DartsDashboard");
+        constellation.initializeClient("http://192.168.1.2:8088", "maximeQuentinThomasCharles5900DartsBoyGay", "DartsDashboard");
         constellation.onConnectionStateChanged(function (change) {
             if (change.newState === $.signalR.connectionState.connected) {
                 console.log("DartsDashboard connected");
@@ -43,9 +47,73 @@ angular.module('myApp.home', ['ngRoute'])
     }
     
     function selectPlayers(nbPlayers){
-        vm.currentGame.nbPlayers = nbPlayers;
-        constellation.sendMessage({ Scope: 'DartsDashboard', Args: ['Darts'] }, 'StartGame', [ "gameType", vm.currentGame.type, "nbPlayers", vm.currentGame.nbPlayers ]);
+        vm.currentGame.players = new Array(nbPlayers);
+        for(var i = 0; i < nbPlayers; i ++ ){
+            var player = {}
+            player.player_name = "Player " + (i+1) ;
+            vm.currentGame.players[i] = player;
+        }
+        vm.currentGame.id = vm.generateToken();
+        vm.playersSelected = true;
     }
     
+    
+    function startGame(){
+        console.log(vm.currentGame);
+        //constellation.sendMessage({ Scope: 'Package', Args: ['DartManager'] }, 'initGame', vm.currentGame);
+        $location.path('/game');            
+
+    }
+    
+    
+    function generateToken(){
+		var rndString = "";
+	    for (var i = 1; i < 50; i++) { 
+			var rndNum = Math.ceil(Math.random() * stringArray.length) - 1;
+			rndString = rndString + stringArray[rndNum];
+		};
+		return rndString;
+	};
+    
+    function joinModal(ev) {
+        $mdDialog.show({
+          controller: JoinModalController,
+          controllerAs: 'jmc',
+          templateUrl: 'home/joinModal.tmpl.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true,
+            locals: {
+                gameId: vm.currentGame.id
+            }
+        })
+        .then(function(answer) {
+          //vm.status = 'You said the information was "' + answer + '".';
+        }, function() {
+          //vm.status = 'You cancelled the dialog.';
+        });
+      };
+    
+    
+    
+    function JoinModalController($mdDialog, gameId) {
+        var vm = this;
+        vm.gameId = gameId;
+        vm.test = "tesst";
+        
+        console.log(gameId);
+        
+        vm.hide = function() {
+          $mdDialog.hide();
+        };
+
+        vm.cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        vm.answer = function(answer) {
+          $mdDialog.hide(answer);
+        };
+  }
     
 }]);

@@ -1,5 +1,29 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div layout="row" layout-align="center">
+      <md-card flex="20" class="game-card" ng-repeat="player in gc.game.players" ng-click="hc.selectGame(game)" ng-class="{'current-player': gc.game.player == player.player_id}">
+        <md-card-title>
+              <md-card-title-text>
+                    <center>
+                      <h2 class="md-headline centered">{{player.player_name | uppercase }}</h2>
+                      <h1> {{player.score}}</h1>
+                    </center>
+            </md-card-title-text>
+          </md-card-title>
+       </md-card>
+</div>
+
+<div layout="row" layout-align="center">
+    <md-card flex="60" class="game-card">
+        <md-card-title>
+            <md-card-title-text>
+                      <span class="md-headline centered" layout="row" layout-align="center center">
+                          <div flex="33" class="turn" ng-repeat="dart in gc.currentPlayerTurn track by $index">
+                              <center>
+                                  <img ng-show="!dart" src="images/darts.png"/>
+                                  <h1 ng-show="dart">{{dart | uppercase}}</h1>
+                              </center>
+                          </div>
+                      </span>
+            </md-card-title-text>
+          </md-card-title>
+    </md-card>
+</div>

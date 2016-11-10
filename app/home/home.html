@@ -24,7 +24,7 @@
        </md-card>
     </div>
 </div>
-<div ng-show="hc.gameSelected">
+<div ng-show="hc.gameSelected && !hc.playersSelected ">
     <div layout="row" layout-align="center">
       <md-card flex="20" class="game-card" ng-repeat="players in hc.nbPlayers" ng-click="hc.selectPlayers(players)">
         <md-card-title>
@@ -35,5 +35,22 @@
             </md-card-title-text>
           </md-card-title>
        </md-card>
+    </div>
+</div>
+<div ng-show="hc.gameSelected && hc.playersSelected ">
+    <div layout="row" layout-align="center">
+      <md-card flex="20" class="game-card" ng-repeat="singlePlayer in hc.currentGame.players" ng-click="hc.joinModal($event)">
+        <md-card-title>
+              <md-card-title-text>
+                    <center>
+                      <span class="md-headline centered">{{singlePlayer.player_name}}</span>
+                        <img src="images/user.png"/>
+                    </center>
+            </md-card-title-text>
+          </md-card-title>
+       </md-card>
+    </div>
+    <div layout="row" layout-align="center">
+        <md-button class="md-raised md-primary" ng-click="hc.startGame()">Start</md-button>
     </div>
 </div>
