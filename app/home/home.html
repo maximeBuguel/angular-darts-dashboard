@@ -41,11 +41,9 @@
     <div layout="row" layout-align="center">
       <md-card flex="20" class="game-card" ng-repeat="singlePlayer in hc.currentGame.players" ng-click="hc.joinModal($event)">
         <md-card-title>
-              <md-card-title-text>
-                    <center>
-                      <span class="md-headline centered">{{singlePlayer.player_name}}</span>
-                        <img src="images/user.png"/>
-                    </center>
+              <md-card-title-text layout="column" layout-align="center center">
+                      <h3 style="text-align:center;">{{singlePlayer.player_name}}</h3>
+                      <img height="128" width="128" src="images/user.png"/>
             </md-card-title-text>
           </md-card-title>
        </md-card>

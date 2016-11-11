@@ -1,25 +1,26 @@
+<!--Score Summary-->
 <div layout="row" layout-align="center">
-      <md-card flex="20" class="game-card" ng-repeat="player in gc.game.players" ng-class="{'current-player': gc.game.player == player.player_id}">
+      <md-card flex="20" class="game-card" ng-repeat="player in gc.constelationGame.Players" ng-class="{'current-player': gc.constelationGame.CurrentPlayer.Id == player.Id}">
         <md-card-title>
               <md-card-title-text>
                     <center>
-                      <h2 class="md-headline centered">{{player.player_name | uppercase }}</h2>
-                      <h1> {{player.score}}</h1>
+                      <h2 class="md-headline centered">{{player.Name | uppercase }}</h2>
+                      <h1> {{player.Score}}</h1>
                     </center>
             </md-card-title-text>
           </md-card-title>
        </md-card>
 </div>
-
+<!--Current Round -->
 <div layout="row" layout-align="center">
     <md-card flex="60" class="game-card">
         <md-card-title>
             <md-card-title-text layout="column" layout-align="center">
                       <span class="md-headline centered" layout="row" layout-align="center">
-                          <div flex="33" class="turn" ng-repeat="dart in gc.currentPlayerTurn track by $index">
+                          <div flex="33" class="turn" ng-repeat="dart in gc.constelationGame.CurrentPlayer.CurentRound.shoots track by $index">
                               <center>
-                                  <img ng-show="!dart" height="75" width="75" src="images/darts.png"/>
-                                  <h2 ng-show="dart">{{dart | uppercase}}</h1>
+                                  <img ng-show="dart.Type == 0" height="75" width="75" src="images/darts.png"/>
+                                  <h2 ng-show="dart.Type != 0">{{ gc.getShot(dart) | uppercase}}</h1>
                               </center>
                           </div>
                       </span>
@@ -31,15 +32,12 @@
           </md-card-title>
     </md-card>
 </div>
-<md-card layout="column" layout-align="center">
-        <md-card-title flex="10">
-              <md-card-title-text>
-                <h2 class="md-headline centered">Summary :</h2>
-            </md-card-title-text>
-          </md-card-title>
-       <div layout="row" layout-align="center"  flex="90" >
+
+<!--01 Game content-->
+<md-card layout="column" layout-align="center" ng-show="gc.game.game_type == '01 Game'">
+       <div layout="row" layout-align="center">
            <div flex="25" ng-repeat="player in gc.game.players">
-               <h3>{{player.player_name | uppercase}}</h3>
+               <center><h3>{{player.player_name | uppercase}}</h3></center>
                <md-divider></md-divider>
                <div ng-repeat="round in player.rounds" layout="row" layout-align="center">
                    <span ng-repeat="dart in round track by $index" style="padding:5px;">
@@ -48,4 +46,23 @@
                </div>
            </div>
        </div>
+</md-card>
+
+
+<!--Cricket Game Content-->
+<md-card layout="column" layout-align="center" ng-show="gc.game.game_type == 'Cricket Game'">
+       <div class="goals-header" layout="row" layout-align="center center" flex="90" flex="grow">
+           <h3 flex="20">Goals :</h3>
+           <md-divider></md-divider>
+           <h3 ng-repeat="goal in gc.cricketGoals" layout="row" layout-align="center" flex="10">
+                {{goal | uppercase}}
+           </h3>
+       </div>
+       <div layout="row" layout-align="center center" flex="90" flex="grow" ng-repeat="player in gc.constelationGame.Players track by $index">
+               <h3 flex="20">{{player.Name | uppercase}}</h3>
+               <md-divider></md-divider>
+               <h3 ng-repeat="(goal, value) in player.ListGoals.ListGoals" layout="row" layout-align="center" flex="10">
+                   <img ng-show="value != 0" height="75" width="75" ng-src="{{gc.getImage(value)}}"/>
+               </h3>
+           </div>
 </md-card>

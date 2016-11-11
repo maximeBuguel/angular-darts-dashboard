@@ -15,7 +15,7 @@ angular.module('myApp.game', ['ngRoute'])
     var vm = this;
     vm.game = {
 	"game_id":1,
-	"game_type":"01 Game",
+	"game_type":"Cricket Game",
 	"round_number": 2,
 	"player" : 1, 
 	"players":[
@@ -75,31 +75,31 @@ angular.module('myApp.game', ['ngRoute'])
 	"game_information":{
 		"goals":[
 			{
-			"20":0,
+			"20":2,
 			"19":0,
 			"18":0,
 			"17":0,
 			"16":1,
 			"15":0,
-			"bull":2
+			"bull":1
 			},
 			{
 			"20":0,
 			"19":0,
 			"18":0,
 			"17":0,
-			"16":1,
-			"15":0,
-			"bull":2
+			"16":0,
+			"15":1,
+			"bull":0
 			},
 			{
 			"20":0,
-			"19":0,
+			"19":1,
 			"18":0,
 			"17":0,
-			"16":1,
+			"16":0,
 			"15":0,
-			"bull":2
+			"bull":0
 			},
 			{
 			"20":0,
@@ -114,14 +114,199 @@ angular.module('myApp.game', ['ngRoute'])
 
 	}
 }
-    vm.cricketGoals = ["20","19","18","17","16","15","bull"];
-    vm.isCurrentPlayer = isCurrentPlayer
+    vm.constelationGame = {
+  "Players": [
+    {
+      "ListGoals": {
+        "ListGoals": {
+          "15": 0,
+          "16": 0,
+          "17": 0,
+          "18": 3,
+          "19": 0,
+          "20": 2,
+          "25": 0
+        }
+      },
+      "Id": 1,
+      "Name": "Thomas",
+      "Score": 0,
+      "Rounds": [
+        {
+          "shoots": [
+            {
+              "Type": 3,
+              "Value": 18
+            },
+            {
+              "Type": 1,
+              "Value": 20
+            },
+            {
+              "Type": 0,
+              "Value": 0
+            }
+          ],
+          "LastShoot": {
+            "Type": 0,
+            "Value": 0
+          }
+        }
+      ],
+      "CurentRound": {
+        "shoots": [
+          {
+            "Type": 3,
+            "Value": 18
+          },
+          {
+            "Type": 1,
+            "Value": 20
+          },
+          {
+            "Type": 0,
+            "Value": 0
+          }
+        ],
+        "LastShoot": {
+          "Type": 0,
+          "Value": 0
+        }
+      }
+    },
+    {
+      "ListGoals": {
+        "ListGoals": {
+          "15": 0,
+          "16": 0,
+          "17": 0,
+          "18": 0,
+          "19": 3,
+          "20": 1,
+          "25": 0
+        }
+      },
+      "Id": 2,
+      "Name": "Maxime",
+      "Score": 0,
+      "Rounds": [
+        {
+          "shoots": [],
+          "LastShoot": null
+        },
+        {
+          "shoots": [
+            {
+              "Type": 3,
+              "Value": 12
+            },
+            {
+              "Type": 3,
+              "Value": 20
+            },
+            {
+              "Type": 3,
+              "Value": 19
+            }
+          ],
+          "LastShoot": {
+            "Type": 3,
+            "Value": 19
+          }
+        }
+      ],
+      "CurentRound": {
+        "shoots": [
+          {
+            "Type": 3,
+            "Value": 12
+          },
+          {
+            "Type": 3,
+            "Value": 20
+          },
+          {
+            "Type": 3,
+            "Value": 19
+          }
+        ],
+        "LastShoot": {
+          "Type": 3,
+          "Value": 19
+        }
+      }
+    }
+  ],
+  "CurrentRound": 1,
+  "CurrentPlayer": {
+    "ListGoals": {
+      "ListGoals": {
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 3,
+        "19": 0,
+        "20": 2,
+        "25": 0
+      }
+    },
+    "Id": 1,
+    "Name": "Thomas",
+    "Score": 0,
+    "Rounds": [
+      {
+        "shoots": [
+          {
+            "Type": 3,
+            "Value": 18
+          },
+          {
+            "Type": 1,
+            "Value": 20
+          },
+          {
+            "Type": 0,
+            "Value": 0
+          }
+        ],
+        "LastShoot": {
+          "Type": 0,
+          "Value": 0
+        }
+      }
+    ],
+    "CurentRound": {
+      "shoots": [
+        {
+          "Type": 3,
+          "Value": 18
+        },
+        {
+          "Type": 1,
+          "Value": 20
+        },
+        {
+          "Type": 0,
+          "Value": 0
+        }
+      ],
+      "LastShoot": {
+        "Type": 0,
+        "Value": 0
+      }
+    }
+  }
+}
+
+    vm.cricketGoals = ["15","16","17","18","19","20","bull"];
     vm.currentPlayerTurn = [];
     
     
     vm.setCurrentPlayerTurn = setCurrentPlayerTurn;
+    vm.getShot = getShot;
     vm.cancelDart = cancelDart;
     vm.nextPlayer =nextPlayer;
+    vm.getImage = getImage;
     setCurrentPlayerTurn();
     
     init();
@@ -142,6 +327,18 @@ angular.module('myApp.game', ['ngRoute'])
     });
     */
     
+    
+    function getShot(dart){
+        if(dart.Type == 1){
+            return dart.Value;
+        }
+        if(dart.Type == 2){
+            return "Double " + dart.Value;
+        }
+        if(dart.Type == 3){
+            return "Triple " + dart.Value;
+        }
+    }
     function setCurrentPlayerTurn(){
         var currentPlayerIndex = vm.game.player - 1;
         var currentTurnIndex = vm.game.round_number - 1;
@@ -155,6 +352,18 @@ angular.module('myApp.game', ['ngRoute'])
         }
     }
     
+    function getImage(value){
+         if(value == 1){
+            return "images/darts.png";
+        }
+        if(value == 2){
+            return "images/double.png";
+        }
+        if(value == 3){
+            return "images/triple.png";
+        }
+    }
+    
     function cancelDart(){
         //message callback cancel dart
     }
@@ -163,8 +372,5 @@ angular.module('myApp.game', ['ngRoute'])
         //message callback next player
     }
     
-    function isCurrentPlayer(playerId){
-        return playerId === vm.game.player;
-    }
     
 }]);
