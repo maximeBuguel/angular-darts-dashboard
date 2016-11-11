@@ -33,24 +33,9 @@
     </md-card>
 </div>
 
-<!--01 Game content-->
-<md-card layout="column" layout-align="center" ng-show="gc.game.game_type == '01 Game'">
-       <div layout="row" layout-align="center">
-           <div flex="25" ng-repeat="player in gc.game.players">
-               <center><h3>{{player.player_name | uppercase}}</h3></center>
-               <md-divider></md-divider>
-               <div ng-repeat="round in player.rounds" layout="row" layout-align="center">
-                   <span ng-repeat="dart in round track by $index" style="padding:5px;">
-                       <span ng-show="dart">{{dart| uppercase}}</span>
-                   </span>
-               </div>
-           </div>
-       </div>
-</md-card>
-
 
 <!--Cricket Game Content-->
-<md-card layout="column" layout-align="center" ng-show="gc.game.game_type == 'Cricket Game'">
+<md-card layout="column" layout-align="center" ng-show="gc.constelationGame.Players[0].ListGoals.ListGoals">
        <div class="goals-header" layout="row" layout-align="center center" flex="90" flex="grow">
            <h3 flex="20">Goals :</h3>
            <md-divider></md-divider>
@@ -65,4 +50,20 @@
                    <img ng-show="value != 0" height="75" width="75" ng-src="{{gc.getImage(value)}}"/>
                </h3>
            </div>
+</md-card>
+
+
+<!--01 Game content-->
+<md-card layout="column" layout-align="center" ng-show="gc.game.game_type == '01 Game'">
+       <div layout="row" layout-align="center">
+           <div flex="25" ng-repeat="player in gc.constelationGame.Players track by $index">
+               <center><h3>{{player.Name | uppercase}}</h3></center>
+               <md-divider></md-divider>
+               <div ng-repeat="round in player.Rounds" layout="row" layout-align="center">
+                   <span ng-repeat="dart in round.shoots track by $index" style="padding:5px;">
+                       <span ng-show="dart">{{ gc.getShot(dart) | uppercase}}</span>
+                   </span>
+               </div>
+           </div>
+       </div>
 </md-card>

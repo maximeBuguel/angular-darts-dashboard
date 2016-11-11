@@ -60,7 +60,7 @@ angular.module('myApp.home', ['ngRoute'])
     
     function startGame(){
         console.log(vm.currentGame);
-        //constellation.sendMessage({ Scope: 'Package', Args: ['DartManager'] }, 'initGame', vm.currentGame);
+        constellation.sendMessage({ Scope: 'Package', Args: ['DartManager'] }, 'initGame', vm.currentGame);
         $location.path('/game');            
 
     }

@@ -15,7 +15,7 @@ angular.module('myApp.game', ['ngRoute'])
     var vm = this;
     vm.game = {
 	"game_id":1,
-	"game_type":"Cricket Game",
+	"game_type":"01 Game",
 	"round_number": 2,
 	"player" : 1, 
 	"players":[
@@ -139,7 +139,7 @@ angular.module('myApp.game', ['ngRoute'])
               "Value": 18
             },
             {
-              "Type": 1,
+              "Type": 2,
               "Value": 20
             },
             {
@@ -160,7 +160,7 @@ angular.module('myApp.game', ['ngRoute'])
             "Value": 18
           },
           {
-            "Type": 1,
+            "Type": 2,
             "Value": 20
           },
           {
@@ -201,7 +201,7 @@ angular.module('myApp.game', ['ngRoute'])
               "Value": 12
             },
             {
-              "Type": 3,
+              "Type": 1,
               "Value": 20
             },
             {
@@ -222,7 +222,7 @@ angular.module('myApp.game', ['ngRoute'])
             "Value": 12
           },
           {
-            "Type": 3,
+            "Type": 1,
             "Value": 20
           },
           {
@@ -319,13 +319,12 @@ angular.module('myApp.game', ['ngRoute'])
             }
         });
         constellation.connect();
-    }
-    
-    //S'abonner au stateobject game
-    /*constellation.registerStateObjectLink("*", "HWMonitor", "/intelcpu/0/load/0", "*", function (so) {
-        vm.game = vo.parseJSON();    
-    });
-    */
+        //S'abonner au stateobject game
+        /*constellation.registerStateObjectLink("*", "DartGame", "*", "*", function (so) {
+            vm.game = vo.parseJSON();    
+        });
+*/    }
+
     
     
     function getShot(dart){
@@ -366,10 +365,12 @@ angular.module('myApp.game', ['ngRoute'])
     
     function cancelDart(){
         //message callback cancel dart
+        constellation.sendMessage({ Scope: 'Package', Args: ['DartManager'] }, 'cancel');
     }
     
     function nextPlayer(){
         //message callback next player
+        constellation.sendMessage({ Scope: 'Package', Args: ['DartManager'] }, 'next');
     }
     
     
