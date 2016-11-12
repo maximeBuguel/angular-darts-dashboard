@@ -43,15 +43,16 @@ angular.module('myApp.home', ['ngRoute'])
     
     function selectGame(gameType){
         vm.gameSelected = true;
-        vm.currentGame.type = gameType;
+        vm.currentGame.Type = gameType;
     }
     
     function selectPlayers(nbPlayers){
-        vm.currentGame.players = new Array(nbPlayers);
+        vm.currentGame.Players = new Array(nbPlayers);
         for(var i = 0; i < nbPlayers; i ++ ){
             var player = {}
-            player.player_name = "Player " + (i+1) ;
-            vm.currentGame.players[i] = player;
+            player.Id = i;
+            player.Name = "Player " + (i+1) ;
+            vm.currentGame.Players[i] = player;
         }
         vm.currentGame.id = vm.generateToken();
         vm.playersSelected = true;
@@ -75,13 +76,12 @@ angular.module('myApp.home', ['ngRoute'])
 		return rndString;
 	};
     
-    function joinModal(ev) {
+    function joinModal() {
         $mdDialog.show({
           controller: JoinModalController,
           controllerAs: 'jmc',
           templateUrl: 'home/joinModal.tmpl.html',
           parent: angular.element(document.body),
-          targetEvent: ev,
           clickOutsideToClose:true,
             locals: {
                 gameId: vm.currentGame.id
@@ -99,10 +99,7 @@ angular.module('myApp.home', ['ngRoute'])
     function JoinModalController($mdDialog, gameId) {
         var vm = this;
         vm.gameId = gameId;
-        vm.test = "tesst";
-        
-        console.log(gameId);
-        
+      
         vm.hide = function() {
           $mdDialog.hide();
         };

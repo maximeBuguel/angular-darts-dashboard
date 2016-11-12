@@ -1,0 +1,26 @@
+<md-dialog>
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Winner :</h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Congrats to : <span ng-repeat="winner in wmc.winners">{{winner.Name}}</span></h2>
+        <center>
+             <img src="images/cup.png" />
+        </center>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="wmc.answer()">
+        Close
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

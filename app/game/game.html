@@ -1,6 +1,6 @@
 <!--Score Summary-->
 <div layout="row" layout-align="center">
-      <md-card flex="20" class="game-card" ng-repeat="player in gc.constelationGame.Players" ng-class="{'current-player': gc.constelationGame.CurrentPlayer.Id == player.Id}">
+      <md-card flex="20" class="game-card" ng-repeat="player in constelationGame.Players track by $index" ng-class="{'current-player': constelationGame.CurrentPlayer.Id == player.Id}">
         <md-card-title>
               <md-card-title-text>
                     <center>
@@ -16,17 +16,19 @@
     <md-card flex="60" class="game-card">
         <md-card-title>
             <md-card-title-text layout="column" layout-align="center">
+                      <h3>ROUND {{constelationGame.CurrentRound}}/{{constelationGame.Players[0].NbRound}}</h3>
                       <span class="md-headline centered" layout="row" layout-align="center">
-                          <div flex="33" class="turn" ng-repeat="dart in gc.constelationGame.CurrentPlayer.CurentRound.shoots track by $index">
+                          <div flex="33" class="turn" ng-repeat="dart in currentRoundDarts track by $index">
                               <center>
-                                  <img ng-show="dart.Type == 0" height="75" width="75" src="images/darts.png"/>
-                                  <h2 ng-show="dart.Type != 0">{{ gc.getShot(dart) | uppercase}}</h1>
+                                  <img ng-show="!constelationGame.CurrentPlayer.CurentRound.shoots[dart]" height="75" width="75" src="images/darts.png"/>
+                                  <h2 ng-show="constelationGame.CurrentPlayer.CurentRound.shoots[dart]">{{ getShot(constelationGame.CurrentPlayer.CurentRound.shoots[dart]) | uppercase}}</h1>
                               </center>
                           </div>
                       </span>
                       <div layout="row" layout-align="center">
-                        <md-button class="md-raised md-primary" ng-click="gc.nextPlayer()">Next Player</md-button>
-                        <md-button class="md-raised md-warn" ng-click="gc.cancelDart()">Cancel Dart</md-button>
+                        <md-button class="md-raised md-primary" ng-click="nextPlayer()">Next Player</md-button>
+                        <md-button class="md-raised md-warn" ng-click="cancelDart()">Cancel Dart</md-button>
+                        <!--<md-button class="md-raised md-warn" ng-click="modalWinner()">Test</md-button>-->
                       </div>
             </md-card-title-text>
           </md-card-title>
@@ -35,33 +37,34 @@
 
 
 <!--Cricket Game Content-->
-<md-card layout="column" layout-align="center" ng-show="gc.constelationGame.Players[0].ListGoals.ListGoals">
+<md-card layout="column" layout-align="center" ng-show="constelationGame.Type == 'Cricket Cut Throat'">
        <div class="goals-header" layout="row" layout-align="center center" flex="90" flex="grow">
            <h3 flex="20">Goals :</h3>
            <md-divider></md-divider>
-           <h3 ng-repeat="goal in gc.cricketGoals" layout="row" layout-align="center" flex="10">
+           <h3 ng-repeat="goal in cricketGoals" layout="row" layout-align="center" flex="10">
                 {{goal | uppercase}}
            </h3>
        </div>
-       <div layout="row" layout-align="center center" flex="90" flex="grow" ng-repeat="player in gc.constelationGame.Players track by $index">
+       <div layout="row" layout-align="center center" flex="90" flex="grow" ng-repeat="player in constelationGame.Players track by $index" ng-class="{'current-player': constelationGame.CurrentPlayer.Id == player.Id}">
                <h3 flex="20">{{player.Name | uppercase}}</h3>
                <md-divider></md-divider>
                <h3 ng-repeat="(goal, value) in player.ListGoals.ListGoals" layout="row" layout-align="center" flex="10">
-                   <img ng-show="value != 0" height="75" width="75" ng-src="{{gc.getImage(value)}}"/>
+                   <img ng-show="value != 0" height="75" width="75" ng-src="{{getImage(value)}}"/>
                </h3>
            </div>
 </md-card>
 
 
 <!--01 Game content-->
-<md-card layout="column" layout-align="center" ng-show="gc.game.game_type == '01 Game'">
+<!--ng-show="constelationGame.Type !== 'Cricket'"-->
+<md-card layout="column" layout-align="center">
        <div layout="row" layout-align="center">
-           <div flex="25" ng-repeat="player in gc.constelationGame.Players track by $index">
+           <div flex="25" ng-repeat="player in constelationGame.Players track by $index">
                <center><h3>{{player.Name | uppercase}}</h3></center>
                <md-divider></md-divider>
                <div ng-repeat="round in player.Rounds" layout="row" layout-align="center">
                    <span ng-repeat="dart in round.shoots track by $index" style="padding:5px;">
-                       <span ng-show="dart">{{ gc.getShot(dart) | uppercase}}</span>
+                       <span ng-show="dart">{{ getShot(dart) | uppercase}}</span>
                    </span>
                </div>
            </div>
