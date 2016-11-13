@@ -10,3 +10,8 @@
 .md-card-title{
     padding: 5px !important;
 }
+
+.roundButton{
+    width: 150px;
+    height: 80px;
+}

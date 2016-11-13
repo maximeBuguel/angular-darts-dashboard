@@ -9,6 +9,7 @@ angular.module('myApp.game', ['ngRoute'])
   });
 }])
 
+
 .controller('GameCtrl', ['$scope','$mdDialog','$location', 'constellationConsumer', function($scope,$mdDialog,$location,constellation) {
     console.log("GameCtrl");
     var vm = this;
@@ -22,10 +23,11 @@ angular.module('myApp.game', ['ngRoute'])
     $scope.nextPlayer =nextPlayer;
     $scope.getImage = getImage;
     $scope.winnerModal  = winnerModal;
+    $scope.keyPressed = keyPressed;
+    
     init();
     
     function init(){
-        
         constellation.initializeClient("http://192.168.1.2:8088", "maximeQuentinThomasCharles5900DartsBoyGay", "DartsDashboard");
         constellation.onConnectionStateChanged(function (change) {
             if (change.newState === $.signalR.connectionState.connected) {
@@ -44,22 +46,22 @@ angular.module('myApp.game', ['ngRoute'])
                 constellation.subscribeMessages("DartsDashboard");
 
                 constellation.registerMessageCallback("Triple", function (msg) {
-                    var audio = new Audio('sounds/triple.mp3');
+                    var audio = new Audio('sounds/Triple.wav');
                     audio.play();
                 });
                 
                 constellation.registerMessageCallback("Double", function (msg) {
-                    var audio = new Audio('sounds/double.mp3');
+                    var audio = new Audio('sounds/Double.wav');
                     audio.play();
                 });
                 
                 constellation.registerMessageCallback("Useless", function (msg) {
-                    var audio = new Audio('sounds/useless.mp3');
+                    var audio = new Audio('sounds/Useless.wav');
                     audio.play();
                 });
                 
                 constellation.registerMessageCallback("SoBad", function (msg) {
-                    var audio = new Audio('sounds/sobad.mp3');
+                    var audio = new Audio('sounds/Sobad.wav');
                     audio.play();
                 });
                 
@@ -82,6 +84,11 @@ angular.module('myApp.game', ['ngRoute'])
                     var audio = new Audio('sounds/Busted.wav');
                     audio.play();
                 });
+                
+                 constellation.registerMessageCallback("Good", function (msg) {
+                    var audio = new Audio('sounds/Good.wav');
+                    audio.play();
+                });
             }
         });
         constellation.connect();
@@ -89,6 +96,9 @@ angular.module('myApp.game', ['ngRoute'])
     }
 
     
+    function keyPressed(event){
+        console.log(event);
+    }
     
     function getShot(dart){
         if(dart){
@@ -111,6 +121,9 @@ angular.module('myApp.game', ['ngRoute'])
             }
             if(dart.Type == 0){
                 return "Miss";
+            }
+            if(dart.Type == -1){
+                return "/";
             }
         }
     }

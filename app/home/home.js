@@ -1,5 +1,6 @@
 'use strict';
 
+
 angular.module('myApp.home', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
@@ -13,7 +14,8 @@ angular.module('myApp.home', ['ngRoute'])
 .controller('HomeCtrl', ['constellationConsumer','$location','$mdDialog', function(constellation,  $location, $mdDialog) {
     
     var vm = this;
-    
+    vm.constellationUrl = "http://192.168.1.2:8088" ;
+    vm.accessToken = "maximeQuentinThomasCharles5900DartsBoyGay";
     vm.scoresGames = ['301','501','701','1001']
     vm.cricketsGames = ['Cricket', 'Cricket Cut Throat'];
     vm.nbPlayers = [1,2,3,4];
@@ -30,8 +32,9 @@ angular.module('myApp.home', ['ngRoute'])
     vm.startGame = startGame;
     vm.joinModal  = joinModal;
     init();
-        
+    
     function init(){
+        console.log("init");
         constellation.initializeClient("http://192.168.1.2:8088", "maximeQuentinThomasCharles5900DartsBoyGay", "DartsDashboard");
         constellation.onConnectionStateChanged(function (change) {
             if (change.newState === $.signalR.connectionState.connected) {
@@ -77,7 +80,7 @@ angular.module('myApp.home', ['ngRoute'])
 		return rndString;
 	};
     
-    function joinModal() {
+    function joinModal(playerNumber) {
         $mdDialog.show({
           controller: JoinModalController,
           controllerAs: 'jmc',
@@ -85,10 +88,14 @@ angular.module('myApp.home', ['ngRoute'])
           parent: angular.element(document.body),
           clickOutsideToClose:true,
             locals: {
-                gameId: vm.currentGame.id
+                token: vm.constellationUrl +"-"+vm.accessToken +"-"+ vm.currentGame.id,
+                playerNumber: playerNumber
             }
         })
         .then(function(answer) {
+            
+            console.log("change :" + playerNumber);
+            console.log(answer);
           //vm.status = 'You said the information was "' + answer + '".';
         }, function() {
           //vm.status = 'You cancelled the dialog.';
@@ -97,10 +104,26 @@ angular.module('myApp.home', ['ngRoute'])
     
     
     
-    function JoinModalController($mdDialog, gameId) {
+    function JoinModalController($mdDialog,constellation, token) {
         var vm = this;
-        vm.gameId = gameId;
-      
+        vm.token = token;
+        
+        function init(){
+            constellation.initializeClient("http://192.168.1.2:8088", "maximeQuentinThomasCharles5900DartsBoyGay", "DartsDashboard");
+            constellation.onConnectionStateChanged(function (change) {
+                if (change.newState === $.signalR.connectionState.connected) {
+                    console.log("DartsDashboard connected");
+                }
+            });
+            constellation.connect();
+            constellation.registerMessageCallback("join", function (msg) {
+                 vm.answer(msg)        
+            });
+            
+            
+        }
+        
+        
         vm.hide = function() {
           $mdDialog.hide();
         };

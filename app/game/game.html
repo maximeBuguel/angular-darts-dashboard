@@ -13,22 +13,29 @@
        </md-card>
 </div>
 <!--Current Round -->
-<div layout="row" layout-align="center">
+<div layout="row" layout-align="center" ng-keypress="keyPressed($event)">
     <md-card flex="60" class="game-card">
         <md-card-title>
             <md-card-title-text layout="column" layout-align="center">
                       <h3>ROUND {{constelationGame.CurrentRound}}/{{constelationGame.Players[0].NbRound}}</h3>
-                      <span class="md-headline centered" layout="row" layout-align="center">
-                          <div flex="33" class="turn" ng-repeat="dart in currentRoundDarts track by $index">
+                       <span class="md-headline centered" layout="row" layout-align="center">
+                          <div flex="60" class="turn" ng-repeat="recommanded in constelationGame.CurrentPlayer.BestShoots track by $index">
+                              <center>
+                                  {{getShot(recommanded)}}
+                              </center>
+                          </div>
+                      </span>
+                       <span class="md-headline centered" layout="row" layout-align="center">
+                          <div flex="60" class="turn" ng-repeat="dart in currentRoundDarts track by $index">
                               <center>
                                   <img ng-show="!constelationGame.CurrentPlayer.CurentRound.shoots[dart]" height="75" width="75" src="images/darts.png"/>
-                                  <h2 ng-show="constelationGame.CurrentPlayer.CurentRound.shoots[dart]">{{ getShot(constelationGame.CurrentPlayer.CurentRound.shoots[dart]) | uppercase}}</h1>
+                                  <h4 ng-show="constelationGame.CurrentPlayer.CurentRound.shoots[dart]">{{ getShot(constelationGame.CurrentPlayer.CurentRound.shoots[dart]) | uppercase}}</h1>
                               </center>
                           </div>
                       </span>
                       <div layout="row" layout-align="center">
-                        <md-button class="md-raised md-primary" ng-click="nextPlayer()">Next Player</md-button>
-                        <md-button class="md-raised md-warn" ng-click="cancelDart()">Cancel Dart</md-button>
+                        <md-button class="roundButton md-raised md-primary" ng-click="nextPlayer()">Next Player</md-button>
+                        <md-button class="roundButton md-raised md-warn" ng-click="cancelDart()">Cancel Dart</md-button>
                         <!--<md-button class="md-raised md-warn" ng-click="modalWinner()">Test</md-button>-->
                       </div>
             </md-card-title-text>
@@ -52,13 +59,13 @@
                <h3  ng-show="!player.IsSpoiled" ng-repeat="(goal, value) in player.ListGoals.ListGoals" layout="row" layout-align="center" flex="10">
                    <img ng-show="value != 0" height="75" width="75" ng-src="{{getImage(value)}}"/>
                </h3>
-               <h3 ng-show="player.IsSpoiled">S</h3>
-               <h3 ng-show="player.IsSpoiled">P</h3>
-               <h3 ng-show="player.IsSpoiled">O</h3>
-               <h3 ng-show="player.IsSpoiled">I</h3>
-               <h3 ng-show="player.IsSpoiled">L</h3>
-               <h3 ng-show="player.IsSpoiled">E</h3>
-               <h3 ng-show="player.IsSpoiled">D</h3>
+               <h3 ng-show="player.IsSpoiled" flex="10" layout="row" layout-align="center">S</h3>
+               <h3 ng-show="player.IsSpoiled" flex="10" layout="row" layout-align="center">P</h3>
+               <h3 ng-show="player.IsSpoiled" flex="10" layout="row" layout-align="center">O</h3>
+               <h3 ng-show="player.IsSpoiled" flex="10" layout="row" layout-align="center">I</h3>
+               <h3 ng-show="player.IsSpoiled" flex="10" layout="row" layout-align="center">L</h3>
+               <h3 ng-show="player.IsSpoiled" flex="10" layout="row" layout-align="center">E</h3>
+               <h3 ng-show="player.IsSpoiled" flex="10" layout="row" layout-align="center">D</h3>
            </div>
 </md-card>
 

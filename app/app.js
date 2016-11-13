@@ -5,6 +5,7 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.game',
   'myApp.home',
+  'myApp.arrow',
   'myApp.version',
   'ngAria',
   'ngMaterial',

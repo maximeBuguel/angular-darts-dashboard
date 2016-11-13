@@ -39,7 +39,7 @@
 </div>
 <div ng-show="hc.gameSelected && hc.playersSelected ">
     <div layout="row" layout-align="center">
-      <md-card flex="20" class="game-card" ng-repeat="singlePlayer in hc.currentGame.Players" ng-click="hc.joinModal($event)">
+      <md-card flex="20" class="game-card" ng-repeat="singlePlayer in hc.currentGame.Players track by $index" ng-click="hc.joinModal($index)">
         <md-card-title>
               <md-card-title-text layout="column" layout-align="center center">
                       <h3 style="text-align:center;">{{singlePlayer.Name}}</h3>
