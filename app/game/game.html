@@ -1,11 +1,12 @@
 <!--Score Summary-->
 <div layout="row" layout-align="center">
-      <md-card flex="20" class="game-card" ng-repeat="player in constelationGame.Players track by $index" ng-class="{'current-player': constelationGame.CurrentPlayer.Id == player.Id}">
+      <md-card flex="20" class="game-card" ng-repeat="player in constelationGame.Players track by $index" ng-class="{'current-player': constelationGame.CurrentPlayer.Id == player.Id, 'spoiled-player':player.IsSpoiled }">
         <md-card-title>
               <md-card-title-text>
                     <center>
                       <h2 class="md-headline centered">{{player.Name | uppercase }}</h2>
-                      <h1> {{player.Score}}</h1>
+                      <h1 ng-show="!player.IsSpoiled"> {{player.Score}}</h1>
+                      <h1 ng-show="player.IsSpoiled">SPOILED</h1>
                     </center>
             </md-card-title-text>
           </md-card-title>
@@ -45,12 +46,19 @@
                 {{goal | uppercase}}
            </h3>
        </div>
-       <div layout="row" layout-align="center center" flex="90" flex="grow" ng-repeat="player in constelationGame.Players track by $index" ng-class="{'current-player': constelationGame.CurrentPlayer.Id == player.Id}">
+       <div layout="row" layout-align="center center" flex="90" flex="grow" ng-repeat="player in constelationGame.Players track by $index" ng-class="{'current-player': constelationGame.CurrentPlayer.Id == player.Id, 'spoiled-player':player.IsSpoiled }">
                <h3 flex="20">{{player.Name | uppercase}}</h3>
                <md-divider></md-divider>
-               <h3 ng-repeat="(goal, value) in player.ListGoals.ListGoals" layout="row" layout-align="center" flex="10">
+               <h3  ng-show="!player.IsSpoiled" ng-repeat="(goal, value) in player.ListGoals.ListGoals" layout="row" layout-align="center" flex="10">
                    <img ng-show="value != 0" height="75" width="75" ng-src="{{getImage(value)}}"/>
                </h3>
+               <h3 ng-show="player.IsSpoiled">S</h3>
+               <h3 ng-show="player.IsSpoiled">P</h3>
+               <h3 ng-show="player.IsSpoiled">O</h3>
+               <h3 ng-show="player.IsSpoiled">I</h3>
+               <h3 ng-show="player.IsSpoiled">L</h3>
+               <h3 ng-show="player.IsSpoiled">E</h3>
+               <h3 ng-show="player.IsSpoiled">D</h3>
            </div>
 </md-card>
 

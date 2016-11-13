@@ -3,6 +3,10 @@
     color: #FFFFFF;
 }
 
+.spoiled-player{
+    background-color: #E0E0E0;
+}
+
 .md-card-title{
     padding: 5px !important;
 }

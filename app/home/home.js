@@ -52,6 +52,7 @@ angular.module('myApp.home', ['ngRoute'])
             var player = {}
             player.Id = i;
             player.Name = "Player " + (i+1) ;
+            player.Url = "images/default.png";
             vm.currentGame.Players[i] = player;
         }
         vm.currentGame.id = vm.generateToken();
